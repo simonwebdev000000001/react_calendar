@@ -7,13 +7,17 @@ const initialState = {
   day: new Date(),
   themes: [
     {
+      available: true,
       name: 'Birthday',
       id: 1,
     },
     {
+      available: true,
       name: 'Meetings',
       id: 2,
-    }, {
+    },
+    {
+      available: true,
       name: 'Holidays',
       id: 4,
     },

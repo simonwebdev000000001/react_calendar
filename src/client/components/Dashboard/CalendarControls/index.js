@@ -4,6 +4,7 @@ import styles from './index.scss';
 import CalendarInfo from './CalendarInfo';
 import CalendarPeriod from './CalendarPeriod';
 import CalendarView from './CalendarView';
+import CalendarThemeFilter from './CalendarThemeFilter';
 
 
 class CalendarControls extends PureComponent {
@@ -14,7 +15,10 @@ class CalendarControls extends PureComponent {
       <div className={styles['top-settings']}>
         <CalendarPeriod/>
         <CalendarInfo/>
-        <CalendarView/>
+        <div className={styles['right-controls']}>
+          <CalendarView/>
+          <CalendarThemeFilter/>
+        </div>
       </div>
     );
   }

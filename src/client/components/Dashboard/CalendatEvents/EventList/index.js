@@ -21,6 +21,14 @@ class EventList extends PureComponent {
       <div className={styles['events-list']}>
         {
           events
+            .filter((event) => {
+              for (let i = 0; i < this.props.themes.length; i++) {
+                if (this.props.themes[i].id === event.event_theme.id) {
+
+                  return this.props.themes[i].available;
+                }
+              }
+            })
             .filter((event) => event.day.toDateString() === dayStr && (hour && hour === event.hour || !hour))
             .map((event) => (<CalendatEventsItem item={event} key={event.id}/>))
         }
@@ -32,6 +40,7 @@ class EventList extends PureComponent {
 
 const mapStateToProps = (state) => ({
   events: state.calendar.events,
+  themes: state.calendar.themes,
 });
 
 
