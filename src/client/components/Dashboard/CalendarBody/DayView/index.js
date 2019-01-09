@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 
 import Utils from '../../../../utils';
 import styles from './index.scss';
+import EventList from '../../CalendatEvents/EventList';
+import actionTypes from '../../../../redux/actions/actionTypes';
 
 class DayView extends PureComponent {
 
@@ -29,7 +31,9 @@ class DayView extends PureComponent {
             return (
               <tr key={hour}>
                 <td className={'ignore-events'}>{hour}</td>
-                <td></td>
+                <td onClick={() => this.props.addEvent(day, hour)}>
+                  <EventList day={day} hour={hour} />
+                </td>
               </tr>
             );
           })
@@ -44,7 +48,19 @@ const mapStateToProps = (state) => ({
   day: state.calendar.day,
 });
 const mapDispatchToProps = (dispatch) => (
-  bindActionCreators({}, dispatch)
+  bindActionCreators({
+    addEvent: (day,hour) => (dispatch) => {
+      dispatch({
+        type: actionTypes.CALENDAR_VIEW,
+        payload: {
+          action: {
+            type: 1,
+            data: { day,hour },
+          },
+        },
+      });
+    },
+  }, dispatch)
 );
 
 

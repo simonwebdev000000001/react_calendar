@@ -27,7 +27,14 @@ export default class Utils {
       weekEnd.setDate(weekEnd.getDate() + 1);
     }
 
-    return { weekEnd, weekStart };
+    const days=[];
+    const weekStartClone=new Date(weekStart.getTime());
+    Utils.WEEK_DAYS.forEach(() => {
+      days.push(new Date(weekStartClone.getTime()));
+      weekStartClone.setDate(weekStartClone.getDate() + 1);
+    });
+
+    return { weekEnd, weekStart,days };
   }
 
   static getDayHours() {

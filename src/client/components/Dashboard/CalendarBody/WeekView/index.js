@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 
 import Utils from '../../../../utils';
 import styles from './index.scss';
+import EventList from '../../CalendatEvents/EventList';
+import actionTypes from '../../../../redux/actions/actionTypes';
 
 class WeekView extends PureComponent {
 
@@ -36,8 +38,13 @@ class WeekView extends PureComponent {
               <tr key={hour}>
                 <td className={'ignore-events'}>{hour}</td>
                 {
-                  Utils.WEEK_DAYS.map((day) => {
-                    return (<td key={day}></td>);
+                  Utils.WEEK_DAYS.map((day, index) => {
+                    let _date = week.days[index];
+                    return (
+                      <td key={day} onClick={() => this.props.addEvent(_date, hour)}>
+                        <EventList day={_date} hour={hour}/>
+                      </td>
+                    );
                   })
                 }
               </tr>
@@ -54,7 +61,19 @@ const mapStateToProps = (state) => ({
   day: state.calendar.day,
 });
 const mapDispatchToProps = (dispatch) => (
-  bindActionCreators({}, dispatch)
+  bindActionCreators({
+    addEvent: (day,hour) => (dispatch) => {
+      dispatch({
+        type: actionTypes.CALENDAR_VIEW,
+        payload: {
+          action: {
+            type: 1,
+            data: { day,hour },
+          },
+        },
+      });
+    },
+  }, dispatch)
 );
 
 

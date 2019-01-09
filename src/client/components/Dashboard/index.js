@@ -1,17 +1,18 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 
 import CalendarControls from './CalendarControls';
 import CalendarBody from './CalendarBody';
+import CalendatEvents from './CalendatEvents';
+import { loadAllEvents } from '../../redux/actions/calendar';
 
 
 class Dashboard extends PureComponent {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
+    this.props.loadAllEvents();
   }
 
   render() {
@@ -21,10 +22,17 @@ class Dashboard extends PureComponent {
       <div className="container">
         <CalendarControls/>
         <CalendarBody/>
+        <CalendatEvents/>
       </div>
     );
   }
 }
 
+const mapDispatchToProps = (dispatch) => (
+  bindActionCreators({
+    loadAllEvents,
+  }, dispatch)
+);
 
-export default (Dashboard);
+
+export default connect(null, mapDispatchToProps)(Dashboard);

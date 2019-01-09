@@ -3,14 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 
+import EventList from '../../CalendatEvents/EventList';
 import Utils from '../../../../utils';
 import styles from './index.scss';
+import actionTypes from '../../../../redux/actions/actionTypes';
 
 class MonthView extends PureComponent {
 
-
-  componentDidMount() {
-  }
 
   /**
    * return list of days in weeks
@@ -47,9 +46,10 @@ class MonthView extends PureComponent {
     return weeks;
   }
 
+
   render() {
     const weeks = this._weeks();
-
+    const { events } = this.props;
 
     return (
       <table className={`table ${styles.table}`}>
@@ -70,8 +70,13 @@ class MonthView extends PureComponent {
                 {
                   week.map((day) => {
                     return (
-                      <td key={day.date.toUTCString()} className={day.className}>
+                      <td
+                        key={day.date.toUTCString()}
+                        className={day.className}
+                        onClick={() => this.props.addEvent(day.date)}
+                      >
                         {day.date.toUTCString().split(' ')[1]}
+                        <EventList day={day} />
                       </td>
                     );
                   })
@@ -87,10 +92,23 @@ class MonthView extends PureComponent {
 }
 
 const mapStateToProps = (state) => ({
+  events: state.calendar.events,
   day: state.calendar.day,
 });
 const mapDispatchToProps = (dispatch) => (
-  bindActionCreators({}, dispatch)
+  bindActionCreators({
+    addEvent: (day) => (dispatch) => {
+      dispatch({
+        type: actionTypes.CALENDAR_VIEW,
+        payload: {
+          action: {
+            type: 1,
+            data: { day,hour:'12:00 AM' },
+          },
+        },
+      });
+    },
+  }, dispatch)
 );
 
 
