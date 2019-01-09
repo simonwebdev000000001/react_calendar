@@ -8,13 +8,24 @@ import Utils from '../../../../utils';
 class CalendarInfo extends PureComponent {
 
 
-
   render() {
 
-    let info;
-    switch (this.props.view) {
-      case 'month': {
-        info = (<span>{this.props.day.getFullYear()} {Utils.MONTHES[this.props.day.getMonth()]}</span>);
+    const { day, view } = this.props;
+
+    let info = null;
+    switch (view) {
+      case Utils.CALENDAR_VIEW.MONTH: {
+        info = (<span>{day.getFullYear()} {Utils.MONTHES[day.getMonth()]}</span>);
+        break;
+      }
+      case Utils.CALENDAR_VIEW.WEEK: {
+        const week = Utils.getWeek(day);
+        info = (<span>{week.weekStart.toDateString()} - {week.weekEnd.toDateString()}</span>);
+        break;
+      }
+      case Utils.CALENDAR_VIEW.DAY: {
+        info = (<span>{day.toDateString()}</span>);
+        break;
       }
     }
     return info;

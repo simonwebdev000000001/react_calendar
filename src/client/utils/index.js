@@ -1,9 +1,48 @@
 export default class Utils {
-  static WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sut'];
+  static WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   static MONTHES = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December',
   ];
+  static CALENDAR_VIEW = {
+    MONTH: 1,
+    WEEK: 2,
+    DAY: 3,
+  };
+
+  static getMonday(d) {
+    d = new Date(d);
+    var day = d.getDay(),
+      diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+    return new Date(d.setDate(diff));
+  }
+
+  static getWeek(d) {
+    let weekStart = new Date(d);
+    let weekEnd = new Date(d);
+    while (!weekStart.toDateString().match(Utils.WEEK_DAYS[0])) {
+      weekStart.setDate(weekStart.getDate() - 1);
+    }
+    while (!weekEnd.toDateString().match(Utils.WEEK_DAYS[Utils.WEEK_DAYS.length - 1])) {
+      weekEnd.setDate(weekEnd.getDate() + 1);
+    }
+
+    return { weekEnd, weekStart };
+  }
+
+  static getDayHours() {
+    const day = new Date();
+    day.setHours(0);
+    day.setSeconds(0);
+    const hours = [];
+    for (let i = 0; i < 24; i++) {
+      hours.push({
+        hour: day.toLocaleTimeString().replace(/([\d]+)(:[\d]{2})(.*)/, '$1$3'),
+      });
+      day.setHours(day.getHours() + 1);
+    }
+    return hours;
+  }
 
   /**
    * Returns a date set to the begining of the month

@@ -3,7 +3,7 @@ import actionTypes from '../../actions/actionTypes'
 
 const initialState = {
     events: [],
-    view: 'month',
+    view: 1,
     day: new Date(),
 }
 

@@ -7,6 +7,7 @@ import {
   ButtonToolbar, Button,
 } from 'react-bootstrap';
 import actionTypes from '../../../../redux/actions/actionTypes';
+import Utils from '../../../../utils';
 
 
 class CalendarPeriod extends PureComponent {
@@ -29,9 +30,19 @@ class CalendarPeriod extends PureComponent {
     const { day, view } = this.props;
 
     switch (view) {
-      case 'month': {
+      case Utils.CALENDAR_VIEW.MONTH: {
         let dayCopy = new Date(day.getTime());
         dayCopy.setMonth(dayCopy.getMonth() + 1 * dir);
+        return this.props.updatePeriod(dayCopy);
+      }
+      case Utils.CALENDAR_VIEW.WEEK: {
+        let dayCopy = new Date(day.getTime());
+        dayCopy.setDate(dayCopy.getDate() + Utils.WEEK_DAYS.length * dir);
+        return this.props.updatePeriod(dayCopy);
+      }
+      case Utils.CALENDAR_VIEW.DAY: {
+        let dayCopy = new Date(day.getTime());
+        dayCopy.setDate(dayCopy.getDate() + dir);
         return this.props.updatePeriod(dayCopy);
       }
     }

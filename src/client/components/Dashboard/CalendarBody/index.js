@@ -1,26 +1,28 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-
 
 import MonthView from './MonthView';
-import {
-  ButtonToolbar, Button,
-} from 'react-bootstrap';
-
+import WeekView from './WeekView';
+import DayView from './DayView';
+import Utils from '../../../utils';
 
 class CalendarBody extends PureComponent {
 
-
-  componentDidMount() {
-  }
 
   render() {
     const { view } = this.props;
     let viewComponent = null;
     switch (view) {
-      case 'month': {
+      case Utils.CALENDAR_VIEW.MONTH: {
         viewComponent = (<MonthView/>);
+        break;
+      }
+      case Utils.CALENDAR_VIEW.WEEK: {
+        viewComponent = (<WeekView/>);
+        break;
+      }
+      case Utils.CALENDAR_VIEW.DAY: {
+        viewComponent = (<DayView/>);
         break;
       }
     }
@@ -35,9 +37,6 @@ class CalendarBody extends PureComponent {
 const mapStateToProps = (state) => ({
   view: state.calendar.view,
 });
-const mapDispatchToProps = (dispatch) => (
-  bindActionCreators({}, dispatch)
-);
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CalendarBody);
+export default connect(mapStateToProps)(CalendarBody);

@@ -1,0 +1,16 @@
+.table {
+  :global {
+    tbody {
+      td {
+        cursor: pointer;
+        &:hover {
+          background: rgba(128, 128, 128, 0.29);
+        }
+
+        &.ignore-events {
+          pointer-events: none;
+        }
+      }
+    }
+  }
+}
