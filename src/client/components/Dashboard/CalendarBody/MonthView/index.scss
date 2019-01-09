@@ -1,0 +1,18 @@
+.table{
+  :global{
+    tbody{
+      td{
+
+        min-height: 110px;
+        height: 110px;
+        cursor: pointer;
+        &:hover{
+          background: rgba(128, 128, 128, 0.29);
+        }
+        &.not-current-period{
+          background: rgba(128, 128, 128, 0.54);
+        }
+      }
+    }
+  }
+}
