@@ -1,4 +1,4 @@
-# simple-react-air-traffic
+# simple-react-calendar-events
 
 [Demo](http://206.189.178.244:8238)
 
