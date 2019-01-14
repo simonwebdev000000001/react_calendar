@@ -5,6 +5,7 @@ import {
   Modal, Button, FormGroup, ControlLabel, FormControl, DropdownButton, MenuItem,
 } from 'react-bootstrap';
 
+import styles from './index.scss';
 import actionTypes from '../../../redux/actions/actionTypes';
 import { addEvent, editEvent, removeEvent } from '../../../redux/actions/calendar';
 
@@ -86,18 +87,24 @@ class CalendatEvents extends PureComponent {
                   onChange={this.handleChange}
                 />
               </FormGroup>
-              <DropdownButton
-                id={'dropdown'}
-                title={this.state.event_theme.name}
-              >
-                {
-                  this.props.themes.map((theme) => (
-                    <MenuItem key={theme.id}
-                              onClick={() => this.setState({ event_theme: theme })}>{theme.name}</MenuItem>
-                  ))
-                }
 
-              </DropdownButton>
+              <div className={styles['form-item']}>
+                <ControlLabel>Event theme</ControlLabel>
+                <DropdownButton
+                  id={'dropdown'}
+                  title={this.state.event_theme.name}
+                >
+                  {
+                    this.props.themes.map((theme) => (
+                      <MenuItem key={theme.id}
+                                onClick={() => this.setState({ event_theme: theme })}>{theme.name}</MenuItem>
+                    ))
+                  }
+
+                </DropdownButton>
+              </div>
+
+
             </form>
           ),
         };
@@ -121,18 +128,22 @@ class CalendatEvents extends PureComponent {
                   onChange={this.handleChange}
                 />
               </FormGroup>
-              <DropdownButton
-                id={'dropdown'}
-                title={this.state.event_theme.name}
-              >
-                {
-                  this.props.themes.map((theme) => (
-                    <MenuItem key={theme.id}
-                              onClick={() => this.setState({ event_theme: theme })}>{theme.name}</MenuItem>
-                  ))
-                }
 
-              </DropdownButton>
+              <div className={styles['form-item']}>
+                <ControlLabel>Event theme</ControlLabel>
+                <DropdownButton
+                  id={'dropdown'}
+                  title={this.state.event_theme.name}
+                >
+                  {
+                    this.props.themes.map((theme) => (
+                      <MenuItem key={theme.id}
+                                onClick={() => this.setState({ event_theme: theme })}>{theme.name}</MenuItem>
+                    ))
+                  }
+
+                </DropdownButton>
+              </div>
             </form>
           ),
         };

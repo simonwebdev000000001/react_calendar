@@ -1,8 +1,8 @@
 import actionTypes from '../actionTypes';
-
+const sourceKey = '_events';
 
 export const loadAllEvents = () => (dispatch) => {
-  let data = localStorage.getItem('events');
+  let data = localStorage.getItem(sourceKey);
   if (data) {
     data = JSON.parse(data);
   } else {
@@ -12,7 +12,7 @@ export const loadAllEvents = () => (dispatch) => {
     type: actionTypes.CALENDAR_VIEW,
     payload: {
       events: data.map((el) => {
-        el.day = new Date(el.day);
+        el.day = new Date(el._dayTime);
         return el;
       }),
     },
@@ -21,14 +21,15 @@ export const loadAllEvents = () => (dispatch) => {
 
 export const addEvent = (event) => (dispatch) => {
   event.id = Date.now();
-  let data = localStorage.getItem('events');
+  event._dayTime = event.day.getTime();
+  let data = localStorage.getItem(sourceKey);
   if (data) {
     data = JSON.parse(data);
   } else {
     data = [];
   }
   data.push(event);
-  localStorage.setItem('events', JSON.stringify(data));
+  localStorage.setItem(sourceKey, JSON.stringify(data));
 
   dispatch({
     type: actionTypes.CALENDAR_ADD_EVENT,
@@ -37,16 +38,17 @@ export const addEvent = (event) => (dispatch) => {
 };
 
 export const editEvent = (event) => (dispatch) => {
-  let data = localStorage.getItem('events');
+  let data = localStorage.getItem(sourceKey);
   if (data) {
     data = JSON.parse(data);
   }
   data.forEach((_event) => {
     if (_event.id === event.id) {
       Object.assign(_event, event);
+      _event._dayTime = _event.day.getTime();
     }
   });
-  localStorage.setItem('events', JSON.stringify(data));
+  localStorage.setItem(sourceKey, JSON.stringify(data));
 
   dispatch({
     type: actionTypes.CALENDAR_EDIT_EVENT,
@@ -54,12 +56,12 @@ export const editEvent = (event) => (dispatch) => {
   });
 };
 export const removeEvent = (event) => (dispatch) => {
-  let data = localStorage.getItem('events');
+  let data = localStorage.getItem(sourceKey);
   if (data) {
     data = JSON.parse(data);
   }
   data = data.filter(({ id }) => id !== event.id);
-  localStorage.setItem('events', JSON.stringify(data));
+  localStorage.setItem(sourceKey, JSON.stringify(data));
 
   dispatch({
     type: actionTypes.CALENDAR_DELETE_EVENT,

@@ -16,8 +16,6 @@ class Dashboard extends PureComponent {
   }
 
   render() {
-
-
     return (
       <div className="container">
         <CalendarControls/>
