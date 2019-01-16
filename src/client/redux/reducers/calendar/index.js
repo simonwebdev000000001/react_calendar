@@ -42,11 +42,12 @@ const calendar = (state = { ...initialState }, action) => {
     case actionTypes.CALENDAR_EDIT_EVENT: {
       return {
         ...state,
-        events: state.events.map((event) => {
+        events: [...state.events.map((event) => {
           if (event.id === action.payload.id) {
             Object.assign(event, action.payload);
           }
-        }),
+          return {...event};
+        })],
       };
     }
     case actionTypes.CALENDAR_ADD_EVENT: {

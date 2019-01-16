@@ -64,7 +64,7 @@ class CalendarThemeFilter extends PureComponent {
               </Modal.Body>
 
               <Modal.Footer>
-                <Button onClick={this.cancel}>Cancel</Button>
+                <Button onClick={this.toggleModal}>Cancel</Button>
                 <Button bsStyle="primary" onClick={this.filter}>Save</Button>
               </Modal.Footer>
             </Modal>
